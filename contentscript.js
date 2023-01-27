@@ -1,19 +1,41 @@
-var icon = document.getElementsByClassName("icon-sidebar")[0]
+function findSelectedIconUrl() {
+    let openCanvases = document.getElementsByClassName("app-accordion2__icon-preview");
+    if (openCanvases.length == 0) {
+        return null;
+    }
 
-var iconName = icon.getElementsByClassName("title")[0].innerHTML.replace(/[^A-Z0-9]/ig, "_").toLowerCase()
+    let bigCanvas = openCanvases[0];
+    let icon = bigCanvas.querySelector("img");
+    let url = icon.getAttribute("srcset").split(" ")[0];
+    return url;
+}
 
-var icon = icon.getElementsByClassName("app-icon")[0]
-var icon = icon.getElementsByTagName("svg")[0].outerHTML
+function downloadIcons8Svg(url, name){
+    fetch(url)
+      .then(resp => resp.blob())
+      .then(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const iconDlElem = document.createElement('a');
+          iconDlElem.style.display = 'none';
+          iconDlElem.href = url;
+          iconDlElem.download = name;
+          document.body.appendChild(iconDlElem);
+          iconDlElem.click();
+          window.URL.revokeObjectURL(url);
+          delete iconDlElem;
+      })
+      .catch(() => alert('Download failed, please try again.'));
+}
 
+function tryToDownloadSelectedIcon() {
+    let originalIconUrl = findSelectedIconUrl();
+    if (originalIconUrl == null) {
+        alert("Please select one icon before trying to download it.");
+        return;
+    }
+    let svgUrl = originalIconUrl.substring(0, originalIconUrl.lastIndexOf(".")) + ".svg";
+    let iconName = svgUrl.substring(originalIconUrl.lastIndexOf("/"));
+    downloadIcons8Svg(svgUrl, iconName);
+}
 
-var iconDlElem = document.createElement('a');
-
-var blob = new Blob([icon], {type : "text/plain;charset=UTF-8"});
-iconDlElem.href = window.URL.createObjectURL(blob);
-
-iconDlElem.download = iconName + ".svg";
-iconDlElem.style.display = 'none';
-document.body.appendChild(iconDlElem);
-
-iconDlElem.click(); 
-delete iconDlElem;
+tryToDownloadSelectedIcon();
