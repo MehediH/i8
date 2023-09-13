@@ -20,5 +20,5 @@
   "host_permissions": [
     "https://icons8.com/*"
   ],
-  "permissions": ["scripting"]
+  "permissions": ["scripting", "notifications"]
 }
