@@ -1,5 +1,5 @@
 function findSelectedIconUrl() {
-    const openCanvases = document.querySelectorAll(".app-accordion2__icon-preview");
+    const openCanvases = document.querySelectorAll(".accordion-preview-icon__preview");
     if (!openCanvases.length) {
         return null;
     }
