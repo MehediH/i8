@@ -1,6 +1,6 @@
 {
   "name": "i8",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "manifest_version": 3,
   "description": "Download SVG icons from icons8.com",
   "homepage_url": "https://twitter.com/mehedih_",
@@ -20,5 +20,5 @@
   "host_permissions": [
     "https://icons8.com/*"
   ],
-  "permissions": ["scripting"]
+  "permissions": ["scripting", "notifications"]
 }
